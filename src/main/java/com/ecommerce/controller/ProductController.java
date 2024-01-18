@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,7 +45,7 @@ public class ProductController {
 	@PostMapping("/save")
 	public String save(Product product , @RequestParam("file") MultipartFile imgform) {
 		if (!imgform.isEmpty()) {
-			Path imgDirectory = Paths.get("src//main//resources//static/images");
+			Path imgDirectory = Paths.get("images//");
 			String absolutePath =imgDirectory.toFile().getAbsolutePath();
 			try {
 				byte[] bytesImg = imgform.getBytes();
@@ -55,6 +56,8 @@ public class ProductController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else {
+			product.setImg("default.jpg");
 		}
 		
 		LOGGER.info("este es el objeto producto{}",product);
@@ -79,8 +82,20 @@ public class ProductController {
 	
 	@PostMapping("/update")
 	public String update(Product product,@RequestParam("file") MultipartFile imgform) {
+		Product p = new Product();
+		p = productService.get(product.getId()).get();
+		
 		if (!imgform.isEmpty()) {
-			Path imgDirectory = Paths.get("src//main//resources//static/images");
+			
+			
+			
+			if (!p.getImg().equals("default.jpg")) {
+				String path = "images//";
+				File file = new File (path+p.getImg());
+				file.delete();
+			}
+			
+			Path imgDirectory = Paths.get("src//main//resources//static//images//");
 			String absolutePath =imgDirectory.toFile().getAbsolutePath();
 			try {
 				byte[] bytesImg = imgform.getBytes();
@@ -91,13 +106,26 @@ public class ProductController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else {
+			product.setImg(p.getImg());
+			
+			
 		}
+		product.setUser(p.getUser());
 		productService.update(product);
 		return "redirect:/products";
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Integer id) {
+		Product p = new Product();
+		p = productService.get(id).get();
+		if (!p.getImg().equals("default.jpg")) {
+			LOGGER.info("entro");
+			String path = "images//";
+			File file = new File (path+p.getImg());
+			file.delete();
+		}
 		productService.delete(id);
 		return "redirect:/products";
 	}
