@@ -53,8 +53,8 @@ public class HomeUserController {
 		return "user/product_home";
 	}
 	
-	@PostMapping("/cart")
-	public String addCart(@RequestParam Integer id , @RequestParam Integer amount,Model model,RedirectAttributes redirectAttributes) {
+	@PostMapping("/addcart")
+	public String addCart(@RequestParam Integer id , @RequestParam Integer amount,Model model) {
 		DetailOrder detailorder = new DetailOrder();
 		Product product = new Product();
 		double count = 0;
@@ -76,14 +76,17 @@ public class HomeUserController {
 		
 		order.setTotal(count);
 		
-		redirectAttributes.getFlashAttributes().clear();
-		redirectAttributes.addFlashAttribute("detailorder", details);
-	    redirectAttributes.addFlashAttribute("order", order);
-		
 		model.addAttribute("detailorders", details);
 		model.addAttribute("order", order);
-		return "user/cart";
+		return "redirect:/cart";
 		
+	}
+	
+	@GetMapping("/cart")
+	public String cart(Model model) {
+		model.addAttribute("detailorders", details);
+	    model.addAttribute("order", order);
+		return "/user/Cart";
 	}
 	
 	@GetMapping("/delete/cart/{id}")
@@ -106,7 +109,7 @@ public class HomeUserController {
 		model.addAttribute("detailorders", details);
 		model.addAttribute("order", order);
 		
-		return "user/cart";
+		return "redirect:/cart";
 	}
 	
 	}
