@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ecommerce.models.DetailOrder;
 import com.ecommerce.models.Order;
 import com.ecommerce.models.Product;
-import com.ecommerce.services.ProductServices;
+import com.ecommerce.models.User;
+import com.ecommerce.services.IProductServices;
+import com.ecommerce.services.IUserServices;
 
 @Controller
 @RequestMapping("/")
@@ -30,7 +31,10 @@ public class HomeUserController {
 	private final Logger log = LoggerFactory.getLogger(HomeUserController.class);
 	
 	@Autowired
-	private ProductServices productservices;
+	private IUserServices userServices;
+	
+	@Autowired
+	private IProductServices productservices;
 	
 	private List<DetailOrder> details = new ArrayList<DetailOrder>();
 	
@@ -112,7 +116,15 @@ public class HomeUserController {
 		return "redirect:/cart";
 	}
 	
+	@GetMapping("/order")
+	public String order(Model model) {
+		
+		User user = userServices.findById(1).get();
+		
+		model.addAttribute("detailorders", details);
+		model.addAttribute("order", order);
+		model.addAttribute("user",user);
+		return "user/ordersummary";
 	}
-	
-	
+}
 	

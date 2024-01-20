@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.ecommerce.models.Product;
 
-public interface ProductServices {
+public interface IProductServices {
 
 	public Product save(Product product);
 	public Optional<Product> get(Integer id);

@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommerce.models.Product;
 import com.ecommerce.models.User;
-import com.ecommerce.services.ProductServices;
+import com.ecommerce.services.IProductServices;
 
 @Controller
 @RequestMapping("/products")
@@ -28,7 +28,7 @@ public class ProductController {
 	private final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
-	private ProductServices productService;
+	private IProductServices productService;
 	
 	@GetMapping("")
 	public String show(Model model) {
