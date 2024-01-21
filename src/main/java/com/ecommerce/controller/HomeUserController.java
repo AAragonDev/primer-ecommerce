@@ -2,6 +2,8 @@ package com.ecommerce.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,8 @@ import com.ecommerce.models.DetailOrder;
 import com.ecommerce.models.Order;
 import com.ecommerce.models.Product;
 import com.ecommerce.models.User;
+import com.ecommerce.services.IDetailOrderServices;
+import com.ecommerce.services.IOrderServices;
 import com.ecommerce.services.IProductServices;
 import com.ecommerce.services.IUserServices;
 
@@ -35,6 +39,12 @@ public class HomeUserController {
 	
 	@Autowired
 	private IProductServices productservices;
+	
+	@Autowired
+	private IOrderServices orderServices;
+	
+	@Autowired
+	private IDetailOrderServices detailOrderServices;
 	
 	private List<DetailOrder> details = new ArrayList<DetailOrder>();
 	
@@ -126,5 +136,30 @@ public class HomeUserController {
 		model.addAttribute("user",user);
 		return "user/ordersummary";
 	}
+	
+	@GetMapping("/saveOrder")
+	public String saveOrder() {
+		Date creationDate = new Date();
+		order.setCreationDate(creationDate);
+		order.setNumber(orderServices.generateOrderNumber());
+		
+		User user = userServices.findById(1).get();
+		
+		order.setUser(user);
+		orderServices.Save(order);
+		
+		for (DetailOrder dt:details) {
+			dt.setOrder(order);
+			detailOrderServices.save(dt);
+		}
+		
+		order = new Order();
+		details.clear();
+		
+		
+		return "redirect:/";
+	}
+	
+	
 }
 	

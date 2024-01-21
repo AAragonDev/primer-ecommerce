@@ -8,4 +8,5 @@ public interface IOrderServices {
 
 	List<Order> findAll();
 	Order Save(Order order);
+	String generateOrderNumber();
 }
