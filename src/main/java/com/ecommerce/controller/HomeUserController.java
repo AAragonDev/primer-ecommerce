@@ -3,9 +3,10 @@ package com.ecommerce.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import com.ecommerce.services.IDetailOrderServices;
 import com.ecommerce.services.IOrderServices;
 import com.ecommerce.services.IProductServices;
 import com.ecommerce.services.IUserServices;
+
 
 @Controller
 @RequestMapping("/")
@@ -159,6 +161,16 @@ public class HomeUserController {
 		
 		return "redirect:/";
 	}
+	
+	@PostMapping("/search")
+	public String searchProduct(@RequestParam String name,Model model) {
+		log.info("nombre del producto: {}",name);
+		
+		List<Product> products = productservices.findAll().stream().filter(p -> p.getName().contains(name)).collect(Collectors.toList());
+		model.addAttribute("products",products);
+		return "user/home";
+	}
+	
 	
 	
 }
