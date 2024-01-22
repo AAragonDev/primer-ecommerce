@@ -13,12 +13,24 @@ import com.ecommerce.repository.IUserRepository;
 public class UserServicesImpl implements IUserServices{
 
 	@Autowired
-	private IUserRepository usuariorepository;
+	private IUserRepository userRepository;
 
 	@Override
 	public Optional<User> findById(Integer id) {
 		// TODO Auto-generated method stub
-		return usuariorepository.findById(id);
+		return userRepository.findById(id);
+	}
+
+	@Override
+	public User save(User user) {
+		// TODO Auto-generated method stub
+		return userRepository.save(user);
+	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepository.findByEmail(email);
 	}
 	
 }
