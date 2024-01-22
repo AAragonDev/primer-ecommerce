@@ -51,7 +51,6 @@ public class UserController {
 		log.info("accesos: {}",user);
 		
 		Optional<User> userback = userServices.findByEmail(user.getEmail());
-		//log.info("usuario de db: {}",userback.get());
 		
 		if(userback.isPresent()) {
 			session.setAttribute("iduser", userback.get().getId());

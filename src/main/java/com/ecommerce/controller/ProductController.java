@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ecommerce.models.Product;
 import com.ecommerce.models.User;
 import com.ecommerce.services.IProductServices;
+import com.ecommerce.services.IUserServices;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/products")
@@ -29,6 +32,9 @@ public class ProductController {
 	
 	@Autowired
 	private IProductServices productService;
+	
+	@Autowired
+	private IUserServices userServices;
 	
 	@GetMapping("")
 	public String show(Model model) {
@@ -43,7 +49,7 @@ public class ProductController {
 	
 	
 	@PostMapping("/save")
-	public String save(Product product , @RequestParam("file") MultipartFile imgform) {
+	public String save(Product product , @RequestParam("file") MultipartFile imgform,HttpSession session) {
 		if (!imgform.isEmpty()) {
 			Path imgDirectory = Paths.get("images//");
 			String absolutePath =imgDirectory.toFile().getAbsolutePath();
@@ -62,7 +68,7 @@ public class ProductController {
 		
 		LOGGER.info("este es el objeto producto{}",product);
 		
-		User u = new User(1, "", "", "", "", "", "", "");
+		User u = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		product.setUser(u);
 		productService.save(product);
 		return "redirect:/products";

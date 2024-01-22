@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -27,6 +26,8 @@ import com.ecommerce.services.IDetailOrderServices;
 import com.ecommerce.services.IOrderServices;
 import com.ecommerce.services.IProductServices;
 import com.ecommerce.services.IUserServices;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -53,8 +54,9 @@ public class HomeUserController {
 	private Order order = new Order();
 	
 	@GetMapping("")
-	public String home(Model model) {
+	public String home(Model model,HttpSession session) {
 		
+		log.info("idusuario: {}",session.getAttribute("iduser"));
 		model.addAttribute("products", productservices.findAll());
 		return "user/home";
 	}
@@ -129,9 +131,9 @@ public class HomeUserController {
 	}
 	
 	@GetMapping("/order")
-	public String order(Model model) {
+	public String order(Model model,HttpSession session) {
 		
-		User user = userServices.findById(1).get();
+		User user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		
 		model.addAttribute("detailorders", details);
 		model.addAttribute("order", order);
@@ -140,12 +142,12 @@ public class HomeUserController {
 	}
 	
 	@GetMapping("/saveOrder")
-	public String saveOrder() {
+	public String saveOrder(HttpSession session) {
 		Date creationDate = new Date();
 		order.setCreationDate(creationDate);
 		order.setNumber(orderServices.generateOrderNumber());
 		
-		User user = userServices.findById(1).get();
+		User user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		
 		order.setUser(user);
 		orderServices.Save(order);
