@@ -3,12 +3,12 @@ package com.ecommerce.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.ecommerce.models.User;
+import com.ecommerce.models.Usuario;
 
 public interface IUserServices {
 	
-	Optional<User> findById(Integer id);
-	User save(User user);
-	Optional<User> findByEmail(String email);
-	List<User> findAll();
+	Optional<Usuario> findById(Integer id);
+	Usuario save(Usuario user);
+	Optional<Usuario> findByEmail(String email);
+	List<Usuario> findAll();
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ecommerce.models.DetailOrder;
 import com.ecommerce.models.Order;
 import com.ecommerce.models.Product;
-import com.ecommerce.models.User;
+import com.ecommerce.models.Usuario;
 import com.ecommerce.services.IDetailOrderServices;
 import com.ecommerce.services.IOrderServices;
 import com.ecommerce.services.IProductServices;
@@ -138,7 +138,7 @@ public class HomeUserController {
 	@GetMapping("/order")
 	public String order(Model model,HttpSession session) {
 		
-		User user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
+		Usuario user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		
 		model.addAttribute("detailorders", details);
 		model.addAttribute("order", order);
@@ -152,7 +152,7 @@ public class HomeUserController {
 		order.setCreationDate(creationDate);
 		order.setNumber(orderServices.generateOrderNumber());
 		
-		User user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
+		Usuario user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		
 		order.setUser(user);
 		orderServices.Save(order);

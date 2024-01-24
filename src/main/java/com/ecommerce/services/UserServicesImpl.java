@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ecommerce.models.User;
+import com.ecommerce.models.Usuario;
 import com.ecommerce.repository.IUserRepository;
 
 
@@ -17,25 +17,25 @@ public class UserServicesImpl implements IUserServices{
 	private IUserRepository userRepository;
 
 	@Override
-	public Optional<User> findById(Integer id) {
+	public Optional<Usuario> findById(Integer id) {
 		// TODO Auto-generated method stub
 		return userRepository.findById(id);
 	}
 
 	@Override
-	public User save(User user) {
+	public Usuario save(Usuario user) {
 		// TODO Auto-generated method stub
 		return userRepository.save(user);
 	}
 
 	@Override
-	public Optional<User> findByEmail(String email) {
+	public Optional<Usuario> findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return userRepository.findByEmail(email);
 	}
 
 	@Override
-	public List<User> findAll() {
+	public List<Usuario> findAll() {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}

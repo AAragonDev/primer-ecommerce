@@ -21,7 +21,7 @@ public class Product {
 	private int amount;
 	
 	@ManyToOne
-	private User user;
+	private Usuario user;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -29,7 +29,7 @@ public class Product {
 
 	
 
-	public Product(Integer id, String name, String description, String img, double price, int amount, User user) {
+	public Product(Integer id, String name, String description, String img, double price, int amount, Usuario user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -91,11 +91,11 @@ public class Product {
 	}
 	
 	
-	public User getUser() {
+	public Usuario getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Usuario user) {
 		this.user = user;
 	}
 

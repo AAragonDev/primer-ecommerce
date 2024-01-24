@@ -6,12 +6,13 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ecommerce.models.Order;
-import com.ecommerce.models.User;
+import com.ecommerce.models.Usuario;
 import com.ecommerce.services.IOrderServices;
 import com.ecommerce.services.IUserServices;
 
@@ -36,6 +37,8 @@ public class UserController {
 	
 	@Autowired
 	private IOrderServices orderServices;
+	
+	BCryptPasswordEncoder passwordEncode = new BCryptPasswordEncoder();
 
 	@GetMapping("/register")
 	public String Register() {
@@ -43,12 +46,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/save")
-	public String save(User user) {
+	public String save(Usuario user) {
 		log.info("Usuario registro: {}", user);
 		user.setType("USER");
+		user.setPassword(passwordEncode.encode(user.getPassword()));
 		userServices.save(user);
 		
-		return "redirect:/";
+		return "redirect:/user/login";
 	}
 	
 	@GetMapping("/login")
@@ -56,11 +60,11 @@ public class UserController {
 		return "/user/login";
 	}
 	
-	@PostMapping("/access")
-	public String access(User user,HttpSession session) {
+	@GetMapping("/access")
+	public String access(Usuario user,HttpSession session) {
 		log.info("accesos: {}",user);
 		
-		Optional<User> userback = userServices.findByEmail(user.getEmail());
+		Optional<Usuario> userback = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString()));
 		
 		if(userback.isPresent()) {
 			session.setAttribute("iduser", userback.get().getId());
@@ -79,7 +83,7 @@ public class UserController {
 	public String getShopping(HttpSession session, Model model) {
 		model.addAttribute("sesion", session.getAttribute("iduser"));
 		
-		User user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
+		Usuario user = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		List<Order> orders = orderServices.findByUser(user);
 		
 		model.addAttribute("orders", orders);

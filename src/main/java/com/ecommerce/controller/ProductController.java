@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommerce.models.Product;
-import com.ecommerce.models.User;
+import com.ecommerce.models.Usuario;
 import com.ecommerce.services.IProductServices;
 import com.ecommerce.services.IUserServices;
 
@@ -68,7 +68,7 @@ public class ProductController {
 		
 		LOGGER.info("este es el objeto producto{}",product);
 		
-		User u = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
+		Usuario u = userServices.findById(Integer.parseInt(session.getAttribute("iduser").toString())).get();
 		product.setUser(u);
 		productService.save(product);
 		return "redirect:/products";

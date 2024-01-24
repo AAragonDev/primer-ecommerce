@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 @Table(name = "Users")
-public class User {
+public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -29,11 +29,11 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Order> orders;
 	
-	public User() {
+	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(Integer id, String name, String username, String email, String address, String phone, String type,
+	public Usuario(Integer id, String name, String username, String email, String address, String phone, String type,
 			String password) {
 		super();
 		this.id = id;

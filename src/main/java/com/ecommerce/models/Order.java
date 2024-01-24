@@ -24,7 +24,7 @@ public class Order {
 	private double total;
 	
 	@ManyToOne
-	private User user;
+	private Usuario user;
 	
 	@OneToMany(mappedBy = "order")
 	private List<DetailOrder> detailorder;
@@ -84,11 +84,11 @@ public class Order {
 	
 	
 
-	public User getUser() {
+	public Usuario getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Usuario user) {
 		this.user = user;
 	}
 

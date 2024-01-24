@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.models.Order;
-import com.ecommerce.models.User;
+import com.ecommerce.models.Usuario;
 import com.ecommerce.repository.IOrderRepository;
 
 @Service
@@ -56,7 +56,7 @@ public class OrderServicesImpl implements IOrderServices{
 	}
 
 	@Override
-	public List<Order> findByUser(User user) {
+	public List<Order> findByUser(Usuario user) {
 		// TODO Auto-generated method stub
 		return orderRepository.findByUser(user);
 	}
