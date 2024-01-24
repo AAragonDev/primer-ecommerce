@@ -1,5 +1,6 @@
 package com.ecommerce.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class UserServicesImpl implements IUserServices{
 	public Optional<User> findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public List<User> findAll() {
+		// TODO Auto-generated method stub
+		return userRepository.findAll();
 	}
 	
 }
