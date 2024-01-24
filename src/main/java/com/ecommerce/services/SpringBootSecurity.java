@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +25,7 @@ public class SpringBootSecurity{
 		
 	
 		  http
-          .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF
+          .csrf(csrf -> csrf.disable()) 
           .authorizeHttpRequests(authorizeRequests ->
               authorizeRequests
                   .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -48,9 +47,3 @@ public class SpringBootSecurity{
 
 }
 
-		
-		
-		
-		
-		/*.anyRequest().authenticated())
-		.formLogin(withDefaults()).build();*/
