@@ -2,11 +2,13 @@ package com.ecommerce.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.models.Order;
+import com.ecommerce.models.User;
 import com.ecommerce.repository.IOrderRepository;
 
 @Service
@@ -51,5 +53,17 @@ public class OrderServicesImpl implements IOrderServices{
 			concatNum="0"+concatNum;
 		}
 		return concatNum;
+	}
+
+	@Override
+	public List<Order> findByUser(User user) {
+		// TODO Auto-generated method stub
+		return orderRepository.findByUser(user);
+	}
+
+	@Override
+	public Optional<Order> findById(Integer id) {
+		// TODO Auto-generated method stub
+		return orderRepository.findById(id);
 	}
 }

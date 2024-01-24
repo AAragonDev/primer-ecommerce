@@ -164,6 +164,7 @@ public class HomeUserController {
 		
 		order = new Order();
 		details.clear();
+		details = new ArrayList<DetailOrder>();
 		
 		
 		return "redirect:/";
